@@ -14,4 +14,10 @@ default_task = "publish"
 
 @init
 def set_properties(project):
-    pass
+    # This setting works fine with pip 7.1.2. With pip 8.0.0 it
+    # causes "pybuilder install_dependencies" to fail.
+    project.set_property('install_dependencies_upgrade', True)
+
+
+    # This package triggers the bug, others (e.g. mock) do not trigger it.
+    project.build_depends_on("argparse")
